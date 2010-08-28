@@ -17,7 +17,7 @@ options.paved.update(
         ),
     )
 
-__all__ = ['manage', 'call_manage']
+__all__ = ['manage', 'call_manage', 'test', 'syncdb', 'shell', 'start']
 
 
 @task
@@ -75,4 +75,3 @@ def start():
         call_manage('runserver_plus')
     except BuildFailure:
         call_manage('runserver')
-

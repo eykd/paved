@@ -21,6 +21,7 @@ Other Modules
 Use the same pattern of ``from paved.<module> import *`` for other
 available modules:
 
+- ``paved.dist``: distribution-related tasks and shortcuts
 - ``paved.pkg``: some packaging-related tasks
 - ``paved.django``: Django-related tasks
 - ``paved.util``: some useful utility functions
