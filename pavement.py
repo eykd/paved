@@ -27,5 +27,5 @@ setup(
     author="David Eyk",
     author_email="eykd@eykd.net",
 
-    packages=['paved'],
+    py_modules=['paved'],
     )
