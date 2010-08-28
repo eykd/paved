@@ -5,13 +5,12 @@ Copyright 2010 David Eyk. All rights reserved.
 """
 import urllib
 
-from paver.easy import sh, task, consume_args, options
-from paver.options import Namespace
+from paver.easy import sh, task, consume_args, options, Bunch
 
 from . import paved
 
-options.paved(
-    pkg = Namespace(
+options.paved.update(
+    pkg = Bunch(
         distribute_url = 'http://python-distribute.org/distribute_setup.py',
         )
     )

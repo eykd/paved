@@ -3,8 +3,7 @@
 
 Copyright 2010 David Eyk. All rights reserved.
 """
-from paver.easy import options, path, task
-from paver.options import Namespace
+from paver.easy import options, path, task, Bunch
 
 from . import util
 
@@ -12,10 +11,10 @@ from . import util
 __cwd__ = path('.').abspath()
 
 options(
-    paved = Namespace(
+    paved = Bunch(
         cwd = __cwd__,
         
-        clean = Namespace(
+        clean = Bunch(
             patterns = ["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
             dirs = [__cwd__]
             ),

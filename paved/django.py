@@ -3,13 +3,12 @@
 
 Copyright 2010 David Eyk. All rights reserved.
 """
-from paver.easy import options, sh, task, consume_args
-from paver.options import Namespace
+from paver.easy import options, sh, task, consume_args, Bunch
 
 from . import paved
 
-options.paved(
-    django = Namespace(
+options.paved.update(
+    django = Bunch(
         manage_py = None,
         ),
     )
