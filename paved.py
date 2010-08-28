@@ -14,7 +14,7 @@ options(
     paved = Bunch(
         distribute_url = "http://python-distribute.org/distribute_setup.py",
         cwd = __cwd__,
-        clean_patterns = ['*.pyc', '*.pyo', '*~'],
+        clean_patterns = ["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*"],
         clean_dirs = [__cwd__]
         )
     )
