@@ -21,7 +21,7 @@ site.addsitedir(__path__)
 
 
 setup(
-    name="paved",
+    name="Paved",
     version="0.1",
     url="http://eykd.net/",
     author="David Eyk",
