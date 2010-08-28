@@ -25,7 +25,7 @@ __all__ = ['get_distribute', 'sdist']
 def get_distribute(options):
     """Retrieve a copy of distribute_setup.py for distribution.
     """
-    url = urllib.urlopen(options.paved.pkg.distribute_url)
+    url = urllib.urlopen(options.paved.dist.distribute_url)
     with open(options.paved.cwd / 'distribute_setup.py', 'w') as fo:
         fo.write(url.read())
 

@@ -15,6 +15,7 @@ __path__ = path(__file__).abspath().dirname()
 site.addsitedir(__path__)
 
 from paved import *
+from paved.dist import *
 
 __path__ = path(__file__).abspath().dirname()
 site.addsitedir(__path__)
