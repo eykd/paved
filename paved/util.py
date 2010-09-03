@@ -4,7 +4,18 @@
 Copyright 2010 David Eyk. All rights reserved.
 """
 import re
-from paver.easy import info, options, path, dry
+from paver.easy import info, options, path, dry, sh, error
+
+from . import paved
+
+try:
+    if not options.virtualenv.activate_cmd:
+        raise AttributeError
+except AttributeError:
+    options.setdotted('virtualenv.activate_cmd', 'source ' + options.paved.cwd / 'source' / 'bin' / 'activate')
+
+
+__all__ = ['rmFilePatterns', 'rmDirPatterns', 'shv']
 
 
 def _walkWithAction(*patterns, **kwargs):
@@ -44,3 +55,10 @@ def rmDirPatterns(*patterns, **kwargs):
     kwargs['action'] = 'rmtree'
     kwargs['walk_method'] = 'walkdirs'
     return _walkWithAction(*patterns, **kwargs)
+
+
+def shv(command, capture=False, ignore_error=False, cwd=None):
+    """Run the given command inside the virtual environment.
+    """
+    command = "%s; %s" % (options.virtualenv.activate_cmd, command)
+    return sh(command, capture=capture, ignore_error=ignore_error, cwd=cwd)
