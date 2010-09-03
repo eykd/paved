@@ -1,5 +1,8 @@
-Paved -- common tasks for Paver-based projects
-==============================================
+=====
+Paved
+=====
+
+Paved provides common tasks for Paver-based projects.
 
 Quick Start
 -----------
