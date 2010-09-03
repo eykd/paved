@@ -35,3 +35,11 @@ def get_distribute(options):
 def sdist():
     """Overrides sdist to make sure that our setup.py is generated."""
     pass
+
+
+@task
+@needs('sdist', 'setuptools.command.upload')
+def upload():
+    """Overrides upload to make sure sdist is run.
+    """
+    pass
