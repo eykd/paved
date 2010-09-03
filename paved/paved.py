@@ -5,8 +5,6 @@ Copyright 2010 David Eyk. All rights reserved.
 """
 from paver.easy import options, path, task, Bunch
 
-from . import util
-
 
 __cwd__ = path('.').abspath()
 
