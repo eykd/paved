@@ -22,11 +22,15 @@ site.addsitedir(__path__)
 
 
 setup(
-    name="Paved",
-    version="0.1",
-    url="http://eykd.net/",
-    author="David Eyk",
-    author_email="eykd@eykd.net",
+    name = "Paved",
+    version = "0.1",
+    url = "http://pypi.python.org/pypi/Paved/",
+    author = "David Eyk",
+    author_email = "eykd@eykd.net",
+    license = 'BSD',
 
-    py_modules=['paved'],
+    short_description = 'Common tasks for Paver-based projects.',
+    long_description = open('README.rst').read(),
+
+    packages=['paved'],
     )
