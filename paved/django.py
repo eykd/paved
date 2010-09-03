@@ -3,14 +3,15 @@
 
 Copyright 2010 David Eyk. All rights reserved.
 """
-from paver.easy import options, sh, task, consume_args, Bunch
+from paver.easy import options, sh, task, consume_args, error, Bunch
 from paver.runtime import BuildFailure
 
 from . import paved
+from . import util
 
 options.paved.update(
     django = Bunch(
-        manage_py = None,
+        project = None,
         syncdb = Bunch(
             fixtures = [],
             ),
@@ -29,12 +30,11 @@ def manage(args):
     call_manage(args)
 
 
-def call_manage(cmd, error):
-    manage_py = options.paved.django.manage_py
-    if manage_py is None:
-        error("No manage.py defined. Use: options.paved.django(manage_py = 'path_to_manage_py')")
-        raise ValueError()
-    sh('python {manage_py} {cmd}'.format(**locals()))
+def call_manage(cmd):
+    project = options.paved.django.project
+    if project is None:
+        raise BuildFailure("No project path defined. Use: options.paved.django.project = 'path.to.project'")
+    sh('django_admin.py --settings={project} {cmd}'.format(**locals()))
 
 
 @task
