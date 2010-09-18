@@ -63,13 +63,14 @@ def syncdb(args):
         call_manage("loaddata %s" % fixture)
 
 @task
-def shell():
+def shell(info):
     """Run the ipython shell.
     """
     try:
         import django_extensions
         call_manage('shell_plus')
     except ImportError:
+        info("Could not import django_extensions. Using default shell. ")
         call_manage('shell')
 
 
