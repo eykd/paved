@@ -3,7 +3,7 @@
 
 Copyright 2010 David Eyk. All rights reserved.
 """
-from paver.easy import options, sh, task, consume_args, error, Bunch
+from paver.easy import options, task, consume_args, error, path, Bunch
 from paver.runtime import BuildFailure
 
 from . import paved
@@ -11,6 +11,7 @@ from . import util
 
 options.paved.update(
     django = Bunch(
+        manage_py = None,
         project = None,
         syncdb = Bunch(
             fixtures = [],
@@ -34,7 +35,12 @@ def call_manage(cmd):
     project = options.paved.django.project
     if project is None:
         raise BuildFailure("No project path defined. Use: options.paved.django.project = 'path.to.project'")
-    sh('django_admin.py --settings={project} {cmd}'.format(**locals()))
+    manage_py = options.paved.django.manage_py
+    if manage_py is None:
+        manage_py = 'django-admin.py'
+    else:
+        manage_py = 'cd {manage_py.parent}; python ./{manage_py.name}'.format(**locals())
+    util.shv('{manage_py} {cmd} --settings={project}'.format(**locals()))
 
 
 @task
@@ -56,14 +62,14 @@ def syncdb(args):
     for fixture in options.paved.django.syncdb.fixtures:
         call_manage("loaddata %s" % fixture)
 
-
 @task
 def shell():
     """Run the ipython shell.
     """
     try:
+        import django_extensions
         call_manage('shell_plus')
-    except BuildFailure:
+    except ImportError:
         call_manage('shell')
 
 

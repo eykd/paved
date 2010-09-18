@@ -58,7 +58,10 @@ def rmDirPatterns(*patterns, **kwargs):
 
 
 def shv(command, capture=False, ignore_error=False, cwd=None):
-    """Run the given command inside the virtual environment.
+    """Run the given command inside the virtual environment, if available:
     """
-    command = "%s; %s" % (options.virtualenv.activate_cmd, command)
+    try:
+        command = "%s; %s" % (options.virtualenv.activate_cmd, command)
+    except AttributeError:
+        pass
     return sh(command, capture=capture, ignore_error=ignore_error, cwd=cwd)
