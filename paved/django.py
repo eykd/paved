@@ -70,15 +70,17 @@ def shell(info):
         import django_extensions
         call_manage('shell_plus')
     except ImportError:
-        info("Could not import django_extensions. Using default shell. ")
+        info("Could not import django_extensions. Using default shell.")
         call_manage('shell')
 
 
 @task
-def start():
+def start(info):
     """Run the dev server.
     """
     try:
+        import django_extensions
         call_manage('runserver_plus')
-    except BuildFailure:
+    except ImportError:
+        info("Could not import django_extensions. Using default runserver.")
         call_manage('runserver')

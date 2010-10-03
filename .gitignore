@@ -25,4 +25,5 @@ pip-log.txt
 *.pickle
 *.egg
 setup.py
-/dist/
+/dist
+/docs/_build
