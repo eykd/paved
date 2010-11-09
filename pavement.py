@@ -37,7 +37,6 @@ setup(
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Console',
-        'Framework :: Paver',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
