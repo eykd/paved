@@ -31,7 +31,7 @@ setup(
     author_email = "eykd@eykd.net",
     license = 'BSD',
 
-    short_description = 'Common tasks for Paver-based projects.',
+    description = 'Common tasks for Paver-based projects.',
     long_description = open('README.rst').read(),
 
     classifiers = [
