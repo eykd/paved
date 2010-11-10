@@ -28,3 +28,14 @@ available modules:
 - ``paved.pkg``: some packaging-related tasks
 - ``paved.django``: Django-related tasks
 - ``paved.util``: some useful utility functions
+
+
+Contributing
+------------
+
+I'd love to have help with Paved. If you have common tasks that you're
+always copying and pasting from one pavement.py to the next, they
+probably have a place here. 
+
+The best way to contribute to Paved is to fork the project on Github
+and send pull requests to ``eykd``.
