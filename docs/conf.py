@@ -18,9 +18,30 @@ import sys, os
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('..'))
 
-# Allow 
-from paved import docs
-docs.documentTasks()
+from sphinx.ext import autodoc
+from paver.tasks import Task
+
+class TaskDocumenter(autodoc.FunctionDocumenter):
+    """Allow autodoc to document paver tasks.
+
+    Lifted straight out of Paver's sphinx conf.py:
+
+    http://code.google.com/p/paver/source/browse/trunk/docs/source/conf.py
+    """
+    objtype = "task"
+    directivetype = "function"
+    
+    @classmethod
+    def can_document_member(cls, member, membername, isattr, parent):
+        return isinstance(member, Task)
+        
+    def import_object(self):
+        super(TaskDocumenter, self).import_object()
+        obj = self.object
+        self.object = obj.func
+        return True
+
+autodoc.add_documenter(TaskDocumenter)
 
 # -- General configuration -----------------------------------------------------
 
