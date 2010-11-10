@@ -4,7 +4,7 @@
 Copyright 2010 David Eyk. All rights reserved.
 """
 from paver.easy import options, task, consume_args, error, path, Bunch
-from paver.runtime import BuildFailure
+from paver.easy import BuildFailure
 
 from . import paved
 from . import util

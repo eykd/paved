@@ -33,4 +33,6 @@ setup(
     long_description = open('README.rst').read(),
 
     packages=['paved'],
+    script_name='setup.py',
+    setup_requires=['paver-minilib'],
     )
