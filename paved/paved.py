@@ -24,7 +24,7 @@ __all__ = ['clean']
 
 @task
 def clean(options, info):
-    """Clean up.
+    """Clean up extra files littering the source tree.
 
     options.paved.clean_dirs: directories to search recursively
     options.paved.clean_patterns: patterns to search for and remove

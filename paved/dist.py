@@ -18,7 +18,7 @@ options.paved.update(
         )
     )
 
-__all__ = ['get_distribute', 'sdist']
+__all__ = ['get_distribute', 'sdist', 'upload']
 
 
 @task
@@ -33,7 +33,8 @@ def get_distribute(options):
 @task
 @needs('get_distribute', 'generate_setup', 'minilib', 'setuptools.command.sdist')
 def sdist():
-    """Overrides sdist to make sure that our setup.py is generated."""
+    """Overrides sdist to make sure that our setup.py is generated.
+    """
     pass
 
 
