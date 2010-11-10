@@ -6,6 +6,7 @@ API
 
    api.paved.pkg
    api.paved.dist
+   api.paved.docs
    api.paved.util
    api.paved.django
 

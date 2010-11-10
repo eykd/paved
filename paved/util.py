@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 """paved.util -- helper functions.
-
-Copyright 2010 David Eyk. All rights reserved.
 """
 import re
-from paver.easy import info, options, path, dry, sh, error
-
-from . import paved
+from paver.easy import info, options, path, dry, sh
 
 try:
     if not options.virtualenv.activate_cmd:
@@ -14,8 +10,10 @@ try:
 except AttributeError:
     options.setdotted('virtualenv.activate_cmd', 'source ' + options.paved.cwd / 'source' / 'bin' / 'activate')
 
+from . import paved
 
-__all__ = ['rmFilePatterns', 'rmDirPatterns', 'shv']
+
+__all__ = ['rmFilePatterns', 'rmDirPatterns', 'shv', 'update']
 
 
 def _walkWithAction(*patterns, **kwargs):
@@ -65,3 +63,29 @@ def shv(command, capture=False, ignore_error=False, cwd=None):
     except AttributeError:
         pass
     return sh(command, capture=capture, ignore_error=ignore_error, cwd=cwd)
+
+
+def update(dst, src):
+    """Recursively update the destination dict-like object with the source dict-like object.
+
+    Useful for merging options and Bunches together!
+
+    Based on:
+    http://code.activestate.com/recipes/499335-recursively-update-a-dictionary-without-hitting-py/#c1
+    """
+    stack = [(dst, src)]
+
+    def isdict(o):
+        return hasattr(o, '__setitem__')
+
+    while stack:
+        current_dst, current_src = stack.pop()
+        for key in current_src:
+            if key not in current_dst:
+                current_dst[key] = current_src[key]
+            else:
+                if isdict(current_src[key]) and isdict(current_dst[key]):
+                    stack.append((current_dst[key], current_src[key]))
+                else:
+                    current_dst[key] = current_src[key]
+    return dst

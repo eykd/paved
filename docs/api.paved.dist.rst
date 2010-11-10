@@ -2,4 +2,5 @@ paved.dist
 ==========
 
 .. automodule:: paved.dist
-   :members:
+   :members: get_distribute, sdist, upload
+   :inherited-members:

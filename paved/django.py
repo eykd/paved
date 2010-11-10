@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 """paved.django -- common tasks for django projects.
-
-Copyright 2010 David Eyk. All rights reserved.
 """
-from paver.easy import options, task, consume_args, error, path, Bunch
+from paver.easy import options, task, consume_args, Bunch
 from paver.easy import BuildFailure
 
 from . import paved
 from . import util
 
-options.paved.update(
-    django = Bunch(
-        manage_py = None,
-        project = None,
-        syncdb = Bunch(
-            fixtures = [],
+util.update(
+    options.paved,
+    dict(
+        django = Bunch(
+            manage_py = None,
+            project = None,
+            syncdb = Bunch(
+                fixtures = [],
+                ),
             ),
-        ),
+        )
     )
 
 __all__ = ['manage', 'call_manage', 'test', 'syncdb', 'shell', 'start']
@@ -61,6 +62,7 @@ def syncdb(args):
     call_manage(cmd)
     for fixture in options.paved.django.syncdb.fixtures:
         call_manage("loaddata %s" % fixture)
+
 
 @task
 def shell(info):

@@ -1,8 +1,0 @@
-include setup.py
-include CHANGES.txt
-include LICENSE
-include README.rst
-include distribute_setup.py
-include pavement.py
-include paver-minilib.zip
-include setup.py
