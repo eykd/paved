@@ -21,6 +21,7 @@ from paved.docs import *
 __path__ = path(__file__).abspath().dirname()
 site.addsitedir(__path__)
 
+options.paved.docs.rsync_location = 'eykd.net:webapps/net_eykd_worlds__static/paved'
 
 setup(
     name = "Paved",
