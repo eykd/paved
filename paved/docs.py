@@ -16,7 +16,7 @@ util.update(
         )
     )
 
-__all__ = ['TaskDocumenter', 'documentTasks', 'sphinx_make', 'docs', 'clean_docs']
+__all__ = ['sphinx_make', 'docs', 'clean_docs']
 
 
 def sphinx_make(*targets):

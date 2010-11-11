@@ -19,7 +19,7 @@ import sys, os
 sys.path.insert(0, os.path.abspath('..'))
 
 from sphinx.ext import autodoc
-from paver.tasks import Task
+
 
 class TaskDocumenter(autodoc.FunctionDocumenter):
     """Allow autodoc to document paver tasks.
@@ -33,7 +33,10 @@ class TaskDocumenter(autodoc.FunctionDocumenter):
     
     @classmethod
     def can_document_member(cls, member, membername, isattr, parent):
-        return isinstance(member, Task)
+        try:
+            return member.__class__.__name__ == 'Task' or 'Task' in [c.__name__ for c in member.__mro__]
+        except AttributeError:
+            return False
         
     def import_object(self):
         super(TaskDocumenter, self).import_object()
