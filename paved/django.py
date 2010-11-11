@@ -27,12 +27,26 @@ __all__ = ['manage', 'call_manage', 'test', 'syncdb', 'shell', 'start']
 @consume_args
 def manage(args):
     """Run the provided commands against Django's manage.py
+
+    `options.paved.django.project`: the path to the django project
+        files (where `settings.py` typically resides).
+
+    `options.paved.django.manage_py`: the path where the django
+        project's `manage.py` resides.
     """
     args = ' '.join(args)
     call_manage(args)
 
 
 def call_manage(cmd):
+    """Utility function to run commands against Django's `manage.py`.
+
+    `options.paved.django.project`: the path to the django project
+        files (where `settings.py` typically resides).
+
+    `options.paved.django.manage_py`: the path where the django
+        project's `manage.py` resides.
+     """
     project = options.paved.django.project
     if project is None:
         raise BuildFailure("No project path defined. Use: options.paved.django.project = 'path.to.project'")
@@ -47,7 +61,7 @@ def call_manage(cmd):
 @task
 @consume_args
 def test(args):
-    """Run tests.
+    """Run tests. Shorthand for `paver manage test`.
     """
     cmd = args and 'test %s' % ' '.join(options.args) or 'test'
     call_manage(cmd)
@@ -56,7 +70,7 @@ def test(args):
 @task
 @consume_args
 def syncdb(args):
-    """Update the database with model schema.
+    """Update the database with model schema. Shorthand for `paver manage syncdb`.
     """
     cmd = args and 'syncdb %s' % ' '.join(options.args) or 'syncdb --noinput'
     call_manage(cmd)
@@ -66,7 +80,10 @@ def syncdb(args):
 
 @task
 def shell(info):
-    """Run the ipython shell.
+    """Run the ipython shell. Shorthand for `paver manage shell`.
+
+    Uses `django_extensions <http://pypi.python.org/pypi/django-extensions/0.5>`, if
+    available, to provide `shell_plus`.
     """
     try:
         import django_extensions
@@ -79,6 +96,9 @@ def shell(info):
 @task
 def start(info):
     """Run the dev server.
+
+    Uses `django_extensions <http://pypi.python.org/pypi/django-extensions/0.5>`, if
+    available, to provide `runserver_plus`.
     """
     try:
         import django_extensions

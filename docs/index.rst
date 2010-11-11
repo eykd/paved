@@ -6,11 +6,14 @@
 Welcome to paved's documentation!
 =================================
 
+Paved is a set of common tasks and helpers for quickly setting up a Paver-based project.
+
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
+   quickstart
    api
 
 Indices and tables

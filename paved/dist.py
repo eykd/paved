@@ -39,6 +39,9 @@ __all__ = ['get_distribute', 'sdist', 'upload', 'manifest']
 @task
 def get_distribute(options):
     """Retrieve a copy of distribute_setup.py for distribution.
+
+    `options.paved.dist.distribute_url`: the URL to download the
+    `distribute_setup.py` file from.
     """
     url = urllib.urlopen(options.paved.dist.distribute_url)
     with open(options.paved.cwd / 'distribute_setup.py', 'w') as fo:
@@ -48,6 +51,12 @@ def get_distribute(options):
 @task
 def manifest():
     """Guarantee the existence of a basic MANIFEST.in.
+
+    `options.paved.dist.manifest.include`: set of files (or globs) to include with the `include` directive.
+
+    `options.paved.dist.manifest.recursive_include`: set of files (or globs) to include with the `recursive-include` directive.
+
+    `options.paved.dist.manifest.prune`: set of files (or globs) to exclude with the `prune` directive.
     """
     with open(options.paved.cwd / 'MANIFEST.in', 'w') as fo:
         for item in options.paved.dist.manifest.include:
@@ -69,6 +78,6 @@ def sdist():
 @task
 @needs('sdist', 'setuptools.command.upload')
 def upload():
-    """Overrides upload to make sure sdist is run.
+    """Upload the package to PyPI.
     """
     pass
