@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved.django -- common tasks for django projects.
 """
-from paver.easy import options, task, consume_args, Bunch
+from paver.easy import options, task, consume_args, path, Bunch
 from paver.easy import BuildFailure
 
 from . import paved
@@ -13,8 +13,12 @@ util.update(
         django = Bunch(
             manage_py = None,
             project = None,
+            settings = '',
             syncdb = Bunch(
                 fixtures = [],
+                ),
+            test = Bunch(
+                settings = None,
                 ),
             ),
         )
@@ -28,8 +32,8 @@ __all__ = ['manage', 'call_manage', 'test', 'syncdb', 'shell', 'start']
 def manage(args):
     """Run the provided commands against Django's manage.py
 
-    `options.paved.django.project`: the path to the django project
-        files (where `settings.py` typically resides).
+    `options.paved.django.settings`: the dotted path to the django
+        project module containing settings.
 
     `options.paved.django.manage_py`: the path where the django
         project's `manage.py` resides.
@@ -39,7 +43,7 @@ def manage(args):
 
 
 def call_manage(cmd):
-    """Utility function to run commands against Django's `manage.py`.
+    """Utility function to run commands against Django's `django-admin.py`/`manage.py`.
 
     `options.paved.django.project`: the path to the django project
         files (where `settings.py` typically resides).
@@ -47,10 +51,10 @@ def call_manage(cmd):
     `options.paved.django.manage_py`: the path where the django
         project's `manage.py` resides.
      """
-    project = options.paved.django.project
-    if project is None:
-        raise BuildFailure("No project path defined. Use: options.paved.django.project = 'path.to.project'")
-    manage_py = options.paved.django.manage_py
+    settings = options.paved.django.settings
+    if settings is None:
+        raise BuildFailure("No settings path defined. Use: options.paved.django.settings = 'path.to.project.settings'")
+    manage_py = path(options.paved.django.manage_py)
     if manage_py is None:
         manage_py = 'django-admin.py'
     else:
@@ -63,6 +67,8 @@ def call_manage(cmd):
 def test(args):
     """Run tests. Shorthand for `paver manage test`.
     """
+    if options.paved.django.test.settings is not None:
+        options.paved.django.settings = options.paved.django.test.settings
     cmd = args and 'test %s' % ' '.join(options.args) or 'test'
     call_manage(cmd)
 
