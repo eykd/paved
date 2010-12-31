@@ -92,12 +92,19 @@ def shell(info):
     Uses `django_extensions <http://pypi.python.org/pypi/django-extensions/0.5>`, if
     available, to provide `shell_plus`.
     """
+    cmd = 'shell'
+
+    from django.conf import settings
     try:
         import django_extensions
-        call_manage('shell_plus')
+        if 'django_extensions' in settings.INSTALLED_APPS:
+            cmd = 'shell_plus'
+        else:
+            info('django_extensions is installed, but does not appear in settings.INSTALLED_APPS. Using default shell.')
     except ImportError:
         info("Could not import django_extensions. Using default shell.")
-        call_manage('shell')
+
+    call_manage(cmd)
 
 
 @task
@@ -107,9 +114,16 @@ def start(info):
     Uses `django_extensions <http://pypi.python.org/pypi/django-extensions/0.5>`, if
     available, to provide `runserver_plus`.
     """
+    cmd = 'runserver'
+
+    from django.conf import settings
     try:
         import django_extensions
-        call_manage('runserver_plus')
+        if 'django_extensions' in settings.INSTALLED_APPS:
+            cmd = 'runserver_plus'
+        else:
+            info('django_extensions is installed, but does not appear in settings.INSTALLED_APPS. Using default runserver.')
     except ImportError:
         info("Could not import django_extensions. Using default runserver.")
-        call_manage('runserver')
+
+    call_manage(cmd)

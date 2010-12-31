@@ -1,19 +1,36 @@
 # -*- coding: utf-8 -*-
 """paved.util -- helper functions.
 """
+import os
 import re
 from paver.easy import info, options, path, dry, sh
-
-try:
-    if not options.virtualenv.activate_cmd:
-        raise AttributeError
-except AttributeError:
-    options.setdotted('virtualenv.activate_cmd', 'source ' + options.paved.cwd / 'source' / 'bin' / 'activate')
 
 from . import paved
 
 
 __all__ = ['rmFilePatterns', 'rmDirPatterns', 'shv', 'update']
+
+
+def _setVirtualEnv():
+    """Attempt to set the virtualenv activate command, if it hasn't been specified.
+    """
+    try:
+        activate = options.virtualenv.activate_cmd
+    except AttributeError:
+        activate = None
+
+    if activate is None:
+        virtualenv = path(os.environ.get('VIRTUAL_ENV', ''))
+        if not virtualenv:
+            virtualenv = options.paved.cwd
+        else:
+            virtualenv = path(virtualenv)
+
+        activate = virtualenv / 'bin' / 'activate'
+            
+        if activate.exists():
+            info('Using default virtualenv at %s' % activate)
+            options.setdotted('virtualenv.activate_cmd', 'source %s' % activate)
 
 
 def _walkWithAction(*patterns, **kwargs):
@@ -58,6 +75,7 @@ def rmDirPatterns(*patterns, **kwargs):
 def shv(command, capture=False, ignore_error=False, cwd=None):
     """Run the given command inside the virtual environment, if available:
     """
+    _setVirtualEnv()
     try:
         command = "%s; %s" % (options.virtualenv.activate_cmd, command)
     except AttributeError:
