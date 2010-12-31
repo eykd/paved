@@ -54,12 +54,13 @@ def call_manage(cmd):
     settings = options.paved.django.settings
     if settings is None:
         raise BuildFailure("No settings path defined. Use: options.paved.django.settings = 'path.to.project.settings'")
-    manage_py = path(options.paved.django.manage_py)
+    manage_py = options.paved.django.manage_py
     if manage_py is None:
         manage_py = 'django-admin.py'
     else:
+        manage_py = path(manage_py)
         manage_py = 'cd {manage_py.parent}; python ./{manage_py.name}'.format(**locals())
-    util.shv('{manage_py} {cmd} --settings={project}'.format(**locals()))
+    util.shv('{manage_py} {cmd} --settings={settings}'.format(**locals()))
 
 
 @task
