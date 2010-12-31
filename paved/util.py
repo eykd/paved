@@ -76,7 +76,7 @@ def update(dst, src):
     stack = [(dst, src)]
 
     def isdict(o):
-        return hasattr(o, '__setitem__')
+        return hasattr(o, 'keys')
 
     while stack:
         current_dst, current_src = stack.pop()
