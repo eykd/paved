@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved.django -- common tasks for django projects.
 """
-from paver.easy import options, task, consume_args, path, Bunch
+from paver.easy import options, task, consume_args, path, Bunch, error
 from paver.easy import BuildFailure
 
 from . import paved
@@ -65,7 +65,7 @@ def call_manage(cmd):
 
 @task
 @consume_args
-def test(args):
+def djtest(args):
     """Run tests. Shorthand for `paver manage test`.
     """
     if options.paved.django.test.settings is not None:
@@ -94,13 +94,9 @@ def shell(info):
     """
     cmd = 'shell'
 
-    from django.conf import settings
     try:
         import django_extensions
-        if 'django_extensions' in settings.INSTALLED_APPS:
-            cmd = 'shell_plus'
-        else:
-            info('django_extensions is installed, but does not appear in settings.INSTALLED_APPS. Using default shell.')
+        cmd = 'shell_plus'
     except ImportError:
         info("Could not import django_extensions. Using default shell.")
 
@@ -116,14 +112,37 @@ def start(info):
     """
     cmd = 'runserver'
 
-    from django.conf import settings
+    settings = __import__(options.paved.django.settings)
     try:
         import django_extensions
-        if 'django_extensions' in settings.INSTALLED_APPS:
-            cmd = 'runserver_plus'
-        else:
-            info('django_extensions is installed, but does not appear in settings.INSTALLED_APPS. Using default runserver.')
+        cmd = 'runserver_plus'
     except ImportError:
         info("Could not import django_extensions. Using default runserver.")
 
     call_manage(cmd)
+
+
+@task
+@consume_args
+def schema(args):
+    """Run South's schemamigration command.
+    """
+    try:
+        import south
+        cmd = args and 'schemamigration %s' % ' '.join(options.args) or 'schemamigration'
+        call_manage(cmd)
+    except ImportError:
+        error('Could not import south.')
+
+
+@task
+@consume_args
+def migrate(args):
+    """Run South's migrate command.
+    """
+    try:
+        import south
+        cmd = args and 'migrate %s' % ' '.join(options.args) or 'migrate'
+        call_manage(cmd)
+    except ImportError:
+        error('Could not import south.')
