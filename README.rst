@@ -28,6 +28,7 @@ available modules:
 - ``paved.pkg``: some packaging-related tasks
 - ``paved.django``: Django-related tasks
 - ``paved.util``: some useful utility functions
+- ``paved.util.pycheck``: python code checking functions
 
 
 Contributing
