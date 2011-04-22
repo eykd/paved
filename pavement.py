@@ -52,3 +52,11 @@ setup(
     include_package_data = True,
     zip_safe = False,
     )
+
+options(
+    sphinx=Bunch(
+        docroot='docs',
+        builddir="_build",
+        ),
+
+    )
