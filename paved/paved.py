@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved -- common paver tasks.
 """
-from paver.easy import options, path, task, Bunch, environment
+from paver.easy import options, path, task, Bunch, environment, needs
 import json
 
 __cwd__ = path('.').abspath()
@@ -22,6 +22,7 @@ __all__ = ['clean', 'printoptions']
 
 
 @task
+@needs('paver.doctools.doc_clean')
 def clean(options, info):
     """Clean up extra files littering the source tree.
 
