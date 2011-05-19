@@ -2,7 +2,7 @@
 """pycheck -- check python code.
 """
 from . import util
-from paver.easy import options, task, sh, needs
+from paver.easy import options, task, sh, needs, path
 from paver.options import Bunch
 
 
@@ -50,9 +50,24 @@ def sloccount():
     '''
 
     # filter out  subpackages
-    packages = [x for x in options.setup.packages if '.' not in x]
-
-    sh('sloccount {param} {files} | tee sloccount.sc'.format(param=options.paved.pycheck.sloccount.param, files=' '.join(packages)))
+    setup = options.get('setup')
+    packages = options.get('packages') if setup else None
+        
+    if packages:
+        dirs = [x for x in packages if '.' not in x]
+    else:
+        dirs = ['.']
+    
+    # sloccount has strange behaviour with directories, 
+    # can cause exception in hudson sloccount plugin.
+    # Better to call it with file list
+    ls=[]
+    for d in dirs:
+        ls += list(path(d).walkfiles())
+    #ls=list(set(ls))
+    files=' '.join(ls)
+    param=options.paved.pycheck.sloccount.param
+    sh('sloccount {param} {files} | tee sloccount.sc'.format(param=param, files=files))
 
 @task
 def findimports():
