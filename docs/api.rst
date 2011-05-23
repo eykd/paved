@@ -9,9 +9,11 @@ functions and no tasks.
 .. toctree::
    :maxdepth: 2
 
+   api.paved
    api.paved.pkg
    api.paved.dist
    api.paved.docs
    api.paved.django
    api.paved.util
+   api.paved.pycheck
 
