@@ -24,7 +24,7 @@ util.update(
         )
     )
 
-__all__ = ['manage', 'call_manage', 'test', 'syncdb', 'shell', 'start']
+__all__ = ['manage', 'call_manage', 'djtest', 'syncdb', 'shell', 'start']
 
 
 @task
