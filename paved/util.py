@@ -72,6 +72,16 @@ def rmDirPatterns(*patterns, **kwargs):
     return _walkWithAction(*patterns, **kwargs)
 
 
+def bash(cmd, capture=False, ignore_error=False, cwd=None, 
+       nice=False, stderr=False):
+    cmd = '/bin/bash -c "%s"' % cmd
+    if nice:
+        cmd = 'nice %s' % cmd
+    if stderr:
+        cmd = '%s 2>&1' % cmd
+    sh(cmd, capture=capture, ignore_error=ignore_error, cwd=cwd)
+
+
 def shv(command, capture=False, ignore_error=False, cwd=None):
     """Run the given command inside the virtual environment, if available:
     """
@@ -80,7 +90,7 @@ def shv(command, capture=False, ignore_error=False, cwd=None):
         command = "%s; %s" % (options.virtualenv.activate_cmd, command)
     except AttributeError:
         pass
-    return sh(command, capture=capture, ignore_error=ignore_error, cwd=cwd)
+    return bash(command, capture=capture, ignore_error=ignore_error, cwd=cwd)
 
 
 def update(dst, src):
