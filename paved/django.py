@@ -42,7 +42,7 @@ def manage(args):
     call_manage(args)
 
 
-def call_manage(cmd):
+def call_manage(cmd, capture=False, ignore_error=False):
     """Utility function to run commands against Django's `django-admin.py`/`manage.py`.
 
     `options.paved.django.project`: the path to the django project
@@ -60,7 +60,7 @@ def call_manage(cmd):
     else:
         manage_py = path(manage_py)
         manage_py = 'cd {manage_py.parent}; python ./{manage_py.name}'.format(**locals())
-    util.shv('{manage_py} {cmd} --settings={settings}'.format(**locals()))
+    return util.shv('{manage_py} {cmd} --settings={settings}'.format(**locals()), capture=capture, ignore_error=ignore_error)
 
 
 @task
