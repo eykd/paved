@@ -79,7 +79,7 @@ def bash(cmd, capture=False, ignore_error=False, cwd=None,
         cmd = 'nice %s' % cmd
     if stderr:
         cmd = '%s 2>&1' % cmd
-    sh(cmd, capture=capture, ignore_error=ignore_error, cwd=cwd)
+    return sh(cmd, capture=capture, ignore_error=ignore_error, cwd=cwd)
 
 
 def shv(command, capture=False, ignore_error=False, cwd=None):
