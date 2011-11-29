@@ -26,8 +26,8 @@ __all__ = ['clean', 'printoptions']
 def clean(options, info):
     """Clean up extra files littering the source tree.
 
-    options.paved.dirs: directories to search recursively
-    options.paved.patterns: patterns to search for and remove
+    options.paved.clean.dirs: directories to search recursively
+    options.paved.clean.patterns: patterns to search for and remove
     """
     info("Cleaning patterns %s", options.paved.clean.patterns)
     for wd in options.paved.clean.dirs:
