@@ -14,6 +14,7 @@ util.update(
             manage_py = None,
             project = None,
             settings = '',
+            runserver_port = '',
             syncdb = Bunch(
                 fixtures = [],
                 ),
@@ -24,7 +25,7 @@ util.update(
         )
     )
 
-__all__ = ['manage', 'call_manage', 'test', 'syncdb', 'shell', 'start']
+__all__ = ['manage', 'call_manage', 'djtest', 'syncdb', 'shell', 'start']
 
 
 @task
@@ -42,7 +43,7 @@ def manage(args):
     call_manage(args)
 
 
-def call_manage(cmd):
+def call_manage(cmd, capture=False, ignore_error=False):
     """Utility function to run commands against Django's `django-admin.py`/`manage.py`.
 
     `options.paved.django.project`: the path to the django project
@@ -60,7 +61,7 @@ def call_manage(cmd):
     else:
         manage_py = path(manage_py)
         manage_py = 'cd {manage_py.parent}; python ./{manage_py.name}'.format(**locals())
-    util.shv('{manage_py} {cmd} --settings={settings}'.format(**locals()))
+    return util.shv('{manage_py} {cmd} --settings={settings}'.format(**locals()), capture=capture, ignore_error=ignore_error)
 
 
 @task
@@ -112,12 +113,15 @@ def start(info):
     """
     cmd = 'runserver'
 
-    settings = __import__(options.paved.django.settings)
     try:
         import django_extensions
         cmd = 'runserver_plus'
     except ImportError:
         info("Could not import django_extensions. Using default runserver.")
+
+    port = options.paved.django.runserver_port
+    if port:
+        cmd = '%s %s' % (cmd, port)
 
     call_manage(cmd)
 
