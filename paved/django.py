@@ -14,6 +14,7 @@ util.update(
             manage_py = None,
             project = None,
             settings = '',
+            runserver_port = '',
             syncdb = Bunch(
                 fixtures = [],
                 ),
@@ -112,12 +113,15 @@ def start(info):
     """
     cmd = 'runserver'
 
-    settings = __import__(options.paved.django.settings)
     try:
         import django_extensions
         cmd = 'runserver_plus'
     except ImportError:
         info("Could not import django_extensions. Using default runserver.")
+
+    port = options.paved.django.runserver_port
+    if port:
+        cmd = '%s %s' % (cmd, port)
 
     call_manage(cmd)
 
