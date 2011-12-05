@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved.pkg -- packaging tools for paved.
 """
-from paver.easy import sh, task, consume_args
+from paver.easy import sh, task, consume_args, options, Bunch
 
 from . import paved
 from . import util
@@ -21,8 +21,6 @@ util.update(
 
 
 
-@task
-@consume_args
 def pip_install(*args):
     """Send the given arguments to `pip install`.
     """
@@ -30,8 +28,6 @@ def pip_install(*args):
     sh('pip install %s%s' % (download_cache, ' '.join(args)))
 
 
-@task
-@consume_args
 def easy_install(*args):
     """Send the given arguments to `easy_install`.
     """
