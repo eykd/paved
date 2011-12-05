@@ -3,22 +3,12 @@
 """
 import os
 import re
-from paver.easy import info, options, path, dry, sh
+from paver.easy import info, options, path, dry, sh, Bunch
 
 from . import paved
 
 
-__all__ = ['rmFilePatterns', 'rmDirPatterns', 'shv', 'update']
-
-util.update(
-    options.paved,
-    dict(
-        pip = Bunch(
-            download_cache = '',
-            ),
-        )
-    )
-
+__all__ = ['pip_install', 'easy_install', 'rmFilePatterns', 'rmDirPatterns', 'shv', 'update', ]
 
 def _setVirtualEnv():
     """Attempt to set the virtualenv activate command, if it hasn't been specified.
@@ -126,6 +116,16 @@ def update(dst, src):
                 else:
                     current_dst[key] = current_src[key]
     return dst
+
+
+update(
+    options.paved,
+    dict(
+        pip = Bunch(
+            download_cache = '',
+            ),
+        )
+    )
 
 
 def pip_install(*args):
