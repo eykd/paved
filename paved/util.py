@@ -10,6 +10,15 @@ from . import paved
 
 __all__ = ['rmFilePatterns', 'rmDirPatterns', 'shv', 'update']
 
+util.update(
+    options.paved,
+    dict(
+        pip = Bunch(
+            download_cache = '',
+            ),
+        )
+    )
+
 
 def _setVirtualEnv():
     """Attempt to set the virtualenv activate command, if it hasn't been specified.
@@ -117,3 +126,16 @@ def update(dst, src):
                 else:
                     current_dst[key] = current_src[key]
     return dst
+
+
+def pip_install(*args):
+    """Send the given arguments to `pip install`.
+    """
+    download_cache = ('--download_cache=%s ' % options.paved.pip.download_cache) if options.paved.pip.download_cache else ''
+    sh('pip install %s%s' % (download_cache, ' '.join(args)))
+
+
+def easy_install(*args):
+    """Send the given arguments to `easy_install`.
+    """
+    sh('easy_install %s' % (' '.join(args)))
