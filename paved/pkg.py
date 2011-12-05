@@ -4,8 +4,21 @@
 from paver.easy import sh, task, consume_args
 
 from . import paved
+from . import util
+
 
 __all__ = ['pip_install', 'easy_install']
+
+
+util.update(
+    options.paved,
+    dict(
+        pip = Bunch(
+            download_cache = '',
+            ),
+        )
+    )
+
 
 
 @task
@@ -13,7 +26,8 @@ __all__ = ['pip_install', 'easy_install']
 def pip_install(*args):
     """Send the given arguments to `pip install`.
     """
-    sh('pip install %s' % (' '.join(args)))
+    download_cache = ('--download_cache=%s ' % options.paved.pip.download_cache) if options.paved.pip.download_cache else ''
+    sh('pip install %s%s' % (download_cache, ' '.join(args)))
 
 
 @task
