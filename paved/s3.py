@@ -68,19 +68,20 @@ def upload_s3(file_path, bucket_name, file_key, force=False, acl='private'):
         file_md5, file_md5_64 = s3_key.get_md5_from_hexdigest(hashlib.md5(file_data).hexdigest())
 
         # Check the hash.
-        s3_md5 = s3_key.etag.replace('"', '')
-        if s3_md5 == file_md5:
-            info('Hash is the same. Skipping %s' % file_path)
-            continue
-        elif not force:
-            # Check if file on S3 is older than local file.
-            s3_datetime = datetime.datetime(*time.strptime(
-                s3_key.last_modified, '%a, %d %b %Y %H:%M:%S %Z')[0:6])
-            local_datetime = datetime.datetime.utcfromtimestamp(p.stat().st_mtime)
-            if local_datetime < s3_datetime:
-                info("File %s hasn't been modified since last " \
-                     "being uploaded" % (file_key))
+        if s3_key.etag:
+            s3_md5 = s3_key.etag.replace('"', '')
+            if s3_md5 == file_md5:
+                info('Hash is the same. Skipping %s' % file_path)
                 continue
+            elif not force:
+                # Check if file on S3 is older than local file.
+                s3_datetime = datetime.datetime(*time.strptime(
+                    s3_key.last_modified, '%a, %d %b %Y %H:%M:%S %Z')[0:6])
+                local_datetime = datetime.datetime.utcfromtimestamp(p.stat().st_mtime)
+                if local_datetime < s3_datetime:
+                    info("File %s hasn't been modified since last " \
+                         "being uploaded" % (file_key))
+                    continue
         # File is newer, let's process and upload
         info("Uploading %s..." % (file_key))
         
