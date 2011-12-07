@@ -64,7 +64,7 @@ def upload_s3(file_path, bucket_name, file_key, force=False, acl='private'):
         if content_type:
             headers['Content-Type'] = content_type
         file_size = p.stat().st_size
-        file_data = p.text()
+        file_data = p.bytes()
         file_md5, file_md5_64 = s3_key.get_md5_from_hexdigest(hashlib.md5(file_data).hexdigest())
 
         # Check the hash.
@@ -102,7 +102,7 @@ def download_s3(bucket_name, file_key, file_path, force=False):
 
     s3_key = bucket.get_key(file_key)
     if file_path.exists():
-        file_data = file_path.text()
+        file_data = file_path.bytes()
         file_md5, file_md5_64 = s3_key.get_md5_from_hexdigest(hashlib.md5(file_data).hexdigest())
 
         # Check the hash.
