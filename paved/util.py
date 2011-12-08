@@ -8,7 +8,7 @@ from paver.easy import info, options, path, dry, sh, Bunch
 from . import paved
 
 
-__all__ = ['pip_install', 'easy_install', 'rmFilePatterns', 'rmDirPatterns', 'shv', 'update', ]
+__all__ = ['bash', 'pip_install', 'easy_install', 'rmFilePatterns', 'rmDirPatterns', 'shv', 'update', ]
 
 def _setVirtualEnv():
     """Attempt to set the virtualenv activate command, if it hasn't been specified.
