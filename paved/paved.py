@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved -- common paver tasks.
 """
+from json.encoder import JSONEncoder
 from paver.easy import options, path, task, Bunch, environment, needs
 import json
 
@@ -8,12 +9,12 @@ __cwd__ = path('.').abspath()
 
 
 options(
-    paved = Bunch(
-        cwd = __cwd__,
+    paved=Bunch(
+        cwd=__cwd__,
         
-        clean = Bunch(
-            patterns = ["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
-            dirs = [__cwd__]
+        clean=Bunch(
+            patterns=["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
+            dirs=[__cwd__]
             ),
         ),
     )
@@ -36,6 +37,20 @@ def clean(options, info):
             for f in wd.walkfiles(p):
                 f.remove()
 
+class MyEncoder (JSONEncoder):
+    def default(self, o):
+        try:
+            iterable = iter(o)
+        except TypeError:
+            pass
+        else:
+            return list(iterable)
+        
+        try:
+            return JSONEncoder.default(self, o)
+        except TypeError:
+            return str(o)
+
 @task
 def printoptions():
     '''print paver options.
@@ -43,16 +58,9 @@ def printoptions():
     Prettified by json.
     `long_description` is removed
     '''
-    def replace_set(obj):
-        if isinstance(obj, dict):
-            for k,v in obj.items():
-                if isinstance(v, set):
-                    obj[k]=list(v)
-                replace_set(v)
-                if k=='long_description':
-                    obj[k]='[not displayed]'
-                
-        return obj
-    x = replace_set(environment.options)
-    orig = json.dumps(x, indent=4)
-    print orig
+    x = json.dumps(environment.options, 
+                   indent=4, 
+                   sort_keys=True, 
+                   skipkeys=True, 
+                   cls=MyEncoder)
+    print x
