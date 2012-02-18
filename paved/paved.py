@@ -9,12 +9,12 @@ __cwd__ = path('.').abspath()
 
 
 options(
-    paved=Bunch(
-        cwd=__cwd__,
+    paved = Bunch(
+        cwd = __cwd__,
         
-        clean=Bunch(
-            patterns=["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
-            dirs=[__cwd__]
+        clean = Bunch(
+            patterns = ["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
+            dirs = [__cwd__]
             ),
         ),
     )
@@ -58,9 +58,9 @@ def printoptions():
     Prettified by json.
     `long_description` is removed
     '''
-    x = json.dumps(environment.options, 
-                   indent=4, 
-                   sort_keys=True, 
-                   skipkeys=True, 
+    x = json.dumps(environment.options,
+                   indent=4,
+                   sort_keys=True,
+                   skipkeys=True,
                    cls=MyEncoder)
     print x
