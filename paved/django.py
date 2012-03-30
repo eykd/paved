@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """paved.django -- common tasks for django projects.
 """
+import os
+
 from paver.easy import options, task, consume_args, path, Bunch, error
 from paver.easy import BuildFailure
 
