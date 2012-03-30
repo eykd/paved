@@ -39,8 +39,11 @@ def manage(args):
     `options.paved.django.manage_py`: the path where the django
         project's `manage.py` resides.
     """
-    args = ' '.join(args)
-    call_manage(args)
+
+    # Don't make a call without args, will result in an error.
+    if args:
+        args = ' '.join(args)
+        call_manage(args)
 
 
 def call_manage(cmd, capture=False, ignore_error=False):
@@ -48,11 +51,13 @@ def call_manage(cmd, capture=False, ignore_error=False):
 
     `options.paved.django.project`: the path to the django project
         files (where `settings.py` typically resides).
+        Will fall back to a DJANGO_SETTINGS_MODULE environment variable.
 
     `options.paved.django.manage_py`: the path where the django
         project's `manage.py` resides.
      """
-    settings = options.paved.django.settings
+    settings = (options.paved.django.settings or 
+                os.environ.get('DJANGO_SETTINGS_MODULE'))
     if settings is None:
         raise BuildFailure("No settings path defined. Use: options.paved.django.settings = 'path.to.project.settings'")
     manage_py = options.paved.django.manage_py
