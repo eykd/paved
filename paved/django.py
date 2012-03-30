@@ -43,9 +43,8 @@ def manage(args):
     """
 
     # Don't make a call without args, will result in an error.
-    if args:
-        args = ' '.join(args)
-        call_manage(args)
+    args = ' '.join(args) if args else "help"
+    call_manage(args)
 
 
 def call_manage(cmd, capture=False, ignore_error=False):
