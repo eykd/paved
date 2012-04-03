@@ -14,6 +14,7 @@ util.update(
             manage_py = None,
             project = None,
             settings = '',
+            runserver = 'runserver_plus',
             runserver_port = '',
             syncdb = Bunch(
                 fixtures = [],
@@ -110,14 +111,18 @@ def start(info):
 
     Uses `django_extensions <http://pypi.python.org/pypi/django-extensions/0.5>`, if
     available, to provide `runserver_plus`.
-    """
-    cmd = 'runserver'
 
-    try:
-        import django_extensions
-        cmd = 'runserver_plus'
-    except ImportError:
-        info("Could not import django_extensions. Using default runserver.")
+    Set the command to use with `options.paved.django.runserver`
+    Set the port to use with `options.paved.django.runserver_port`
+    """
+    cmd = options.paved.django.runserver
+
+    if cmd == 'runserver_plus':
+        try:
+            import django_extensions
+        except ImportError:
+            info("Could not import django_extensions. Using default runserver.")
+            cmd = 'runserver'
 
     port = options.paved.django.runserver_port
     if port:
