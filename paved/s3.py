@@ -3,6 +3,7 @@
 
 Requires boto.
 """
+from __future__ import unicode_literals
 import time
 import datetime
 import itertools

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved -- common paver tasks.
 """
+from __future__ import unicode_literals
 from json.encoder import JSONEncoder
 from paver.easy import options, path, task, Bunch, environment, needs
 import json

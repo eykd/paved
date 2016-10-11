@@ -10,6 +10,7 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
+from __future__ import unicode_literals
 
 import sys, os
 
@@ -68,8 +69,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'paved'
-copyright = u'2010, David Eyk'
+project = 'paved'
+copyright = '2010, David Eyk'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -206,8 +207,8 @@ htmlhelp_basename = 'paveddoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'paved.tex', u'paved Documentation',
-   u'David Eyk', 'manual'),
+  ('index', 'paved.tex', 'paved Documentation',
+   'David Eyk', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -239,6 +240,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'paved', u'paved Documentation',
-     [u'David Eyk'], 1)
+    ('index', 'paved', 'paved Documentation',
+     ['David Eyk'], 1)
 ]

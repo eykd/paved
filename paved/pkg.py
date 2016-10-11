@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved.pkg -- packaging tools for paved.
 """
+from __future__ import unicode_literals
 from paver.easy import sh, task, consume_args, options, Bunch
 
 from . import paved

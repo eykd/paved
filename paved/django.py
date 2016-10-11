@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved.django -- common tasks for django projects.
 """
+from __future__ import unicode_literals
 import os
 
 from paver.easy import options, task, consume_args, path, Bunch, error

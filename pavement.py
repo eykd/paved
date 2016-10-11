@@ -3,6 +3,7 @@
 
 Copyright 2010 David Eyk. All rights reserved.
 """
+from __future__ import unicode_literals
 import site
 
 import warnings

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved.dist -- distribution tasks
 """
+from __future__ import unicode_literals
 import urllib
 
 from paver.easy import task, needs, options, path, Bunch

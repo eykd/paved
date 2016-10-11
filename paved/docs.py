@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved.sphinx -- helpers and tasks for Sphinx documentation.
 """
+from __future__ import unicode_literals
 from . import paved, util
 from paver.easy import task, needs, sh, path, options, Bunch, BuildFailure
 

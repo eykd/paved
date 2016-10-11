@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """pycheck -- check python code.
 """
+from __future__ import unicode_literals
 from . import util
 from paver.easy import options, task, sh, needs, path
 from paver.options import Bunch

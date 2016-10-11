@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved.util -- helper functions.
 """
+from __future__ import unicode_literals
 import os
 import re
 from paver.easy import info, options, path, dry, sh, Bunch
