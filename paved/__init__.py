@@ -3,5 +3,5 @@
 
 Copyright 2010 David Eyk. All rights reserved.
 """
-import paved
-from paved import *
+from . import paved
+from .paved import *
