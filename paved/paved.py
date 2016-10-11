@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved -- common paver tasks.
 """
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 from json.encoder import JSONEncoder
 from paver.easy import options, path, task, Bunch, environment, needs
 import json
@@ -64,4 +64,4 @@ def printoptions():
                    sort_keys=True,
                    skipkeys=True,
                    cls=MyEncoder)
-    print x
+    print(x)
