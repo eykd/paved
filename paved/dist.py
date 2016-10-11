@@ -2,7 +2,7 @@
 """paved.dist -- distribution tasks
 """
 from __future__ import unicode_literals
-import urllib
+from six.moves.urllib.request import urlopen
 
 from paver.easy import task, needs, options, path, Bunch
 from paver.setuputils import install_distutils_tasks
@@ -47,7 +47,7 @@ def get_distribute(options):
     `options.paved.dist.distribute_url`: the URL to download the
     `distribute_setup.py` file from.
     """
-    url = urllib.urlopen(options.paved.dist.distribute_url)
+    url = urlopen(options.paved.dist.distribute_url)
     with open(options.paved.cwd / 'distribute_setup.py', 'w') as fo:
         fo.write(url.read())
 
