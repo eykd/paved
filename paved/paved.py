@@ -11,7 +11,7 @@ __cwd__ = path('.').abspath()
 options(
     paved = Bunch(
         cwd = __cwd__,
-        
+
         clean = Bunch(
             patterns = ["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
             dirs = [__cwd__]
@@ -45,7 +45,7 @@ class MyEncoder (JSONEncoder):
             pass
         else:
             return list(iterable)
-        
+
         try:
             return JSONEncoder.default(self, o)
         except TypeError:
@@ -54,7 +54,7 @@ class MyEncoder (JSONEncoder):
 @task
 def printoptions():
     '''print paver options.
-    
+
     Prettified by json.
     `long_description` is removed
     '''

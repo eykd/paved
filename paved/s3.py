@@ -84,7 +84,7 @@ def upload_s3(file_path, bucket_name, file_key, force=False, acl='private'):
                     continue
         # File is newer, let's process and upload
         info("Uploading %s..." % (file_key))
-        
+
         try:
             s3_key.set_contents_from_string(file_data, headers, policy=acl, replace=True, md5=(file_md5, file_md5_64))
         except Exception as e:
@@ -115,7 +115,7 @@ def download_s3(bucket_name, file_key, file_path, force=False):
             if s3_md5 == file_md5:
                 info('Hash is the same. Skipping %s' % file_path)
                 return
-                
+
             elif not force:
                 # Check if file on S3 is older than local file.
                 s3_datetime = datetime.datetime(*time.strptime(
@@ -124,10 +124,10 @@ def download_s3(bucket_name, file_key, file_path, force=False):
                 if s3_datetime < local_datetime:
                     info("File at %s is less recent than the local version." % (file_key))
                     return
-        
+
     # If it is newer, let's process and upload
     info("Downloading %s..." % (file_key))
-    
+
     try:
         with open(file_path, 'w') as fo:
             s3_key.get_contents_to_file(fo)

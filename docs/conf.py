@@ -30,14 +30,14 @@ class TaskDocumenter(autodoc.FunctionDocumenter):
     """
     objtype = "task"
     directivetype = "function"
-    
+
     @classmethod
     def can_document_member(cls, member, membername, isattr, parent):
         try:
             return member.__class__.__name__ == 'Task' or 'Task' in [c.__name__ for c in member.__mro__]
         except AttributeError:
             return False
-        
+
     def import_object(self):
         super(TaskDocumenter, self).import_object()
         obj = self.object

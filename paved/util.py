@@ -26,7 +26,7 @@ def _setVirtualEnv():
             virtualenv = path(virtualenv)
 
         activate = virtualenv / 'bin' / 'activate'
-            
+
         if activate.exists():
             info('Using default virtualenv at %s' % activate)
             options.setdotted('virtualenv.activate_cmd', 'source %s' % activate)
@@ -53,7 +53,7 @@ def _walkWithAction(*patterns, **kwargs):
             if f.exists():
                 msg = "%s %s..." % (action, f)
                 dry(msg, getattr(f, action))
-    
+
 
 def rmFilePatterns(*patterns, **kwargs):
     """Remove all files under the given path with the given patterns.
@@ -71,7 +71,7 @@ def rmDirPatterns(*patterns, **kwargs):
     return _walkWithAction(*patterns, **kwargs)
 
 
-def bash(cmd, capture=False, ignore_error=False, cwd=None, 
+def bash(cmd, capture=False, ignore_error=False, cwd=None,
        nice=False, stderr=False):
     cmd = '/bin/bash -c "%s"' % cmd
     if nice:

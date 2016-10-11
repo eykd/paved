@@ -58,7 +58,7 @@ def call_manage(cmd, capture=False, ignore_error=False):
     `options.paved.django.manage_py`: the path where the django
         project's `manage.py` resides.
      """
-    settings = (options.paved.django.settings or 
+    settings = (options.paved.django.settings or
                 os.environ.get('DJANGO_SETTINGS_MODULE'))
     if settings is None:
         raise BuildFailure("No settings path defined. Use: options.paved.django.settings = 'path.to.project.settings'")
