@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import os
 if os.path.exists("paver-minilib.zip"):
     import sys

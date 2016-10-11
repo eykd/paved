@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """paved.dist -- distribution tasks
 """
-import urllib
+from __future__ import unicode_literals
+from six.moves.urllib.request import urlopen
 
 from paver.easy import task, needs, options, path, Bunch
 from paver.setuputils import install_distutils_tasks
@@ -12,7 +13,7 @@ from . import util
 install_distutils_tasks()
 
 util.update(
-    options.paved, 
+    options.paved,
     dict(
         dist = Bunch(
             distribute_url = 'http://python-distribute.org/distribute_setup.py',
@@ -30,7 +31,7 @@ util.update(
                 recursive_include = set([]),
                 prune = set([]),
                 include_sphinx_docroot=True,
-                exclude_sphinx_builddir=True,                
+                exclude_sphinx_builddir=True,
                 ),
             )
         )
@@ -46,7 +47,7 @@ def get_distribute(options):
     `options.paved.dist.distribute_url`: the URL to download the
     `distribute_setup.py` file from.
     """
-    url = urllib.urlopen(options.paved.dist.distribute_url)
+    url = urlopen(options.paved.dist.distribute_url)
     with open(options.paved.cwd / 'distribute_setup.py', 'w') as fo:
         fo.write(url.read())
 
@@ -56,29 +57,29 @@ def manifest():
     """Guarantee the existence of a basic MANIFEST.in.
 
     manifest doc: http://docs.python.org/distutils/sourcedist.html#manifest
-    
+
     `options.paved.dist.manifest.include`: set of files (or globs) to include with the `include` directive.
 
     `options.paved.dist.manifest.recursive_include`: set of files (or globs) to include with the `recursive-include` directive.
 
     `options.paved.dist.manifest.prune`: set of files (or globs) to exclude with the `prune` directive.
-    
+
     `options.paved.dist.manifest.include_sphinx_docroot`: True -> sphinx docroot is added as `graft`
-    
+
     `options.paved.dist.manifest.include_sphinx_docroot`: True -> sphinx builddir is added as `prune`
     """
     prune = options.paved.dist.manifest.prune
     graft = set()
-    
-    
+
+
     if options.paved.dist.manifest.include_sphinx_docroot:
         docroot = options.get('docroot', 'docs')
         graft.update([docroot])
-    
+
         if options.paved.dist.manifest.exclude_sphinx_builddir:
             builddir = docroot + '/' + options.get("builddir", ".build")
             prune.update([builddir])
-         
+
     with open(options.paved.cwd / 'MANIFEST.in', 'w') as fo:
         for item in graft:
             fo.write('graft %s\n' % item)

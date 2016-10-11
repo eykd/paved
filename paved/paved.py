@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """paved -- common paver tasks.
 """
+from __future__ import unicode_literals, print_function
 from json.encoder import JSONEncoder
 from paver.easy import options, path, task, Bunch, environment, needs
 import json
@@ -11,7 +12,7 @@ __cwd__ = path('.').abspath()
 options(
     paved = Bunch(
         cwd = __cwd__,
-        
+
         clean = Bunch(
             patterns = ["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
             dirs = [__cwd__]
@@ -45,7 +46,7 @@ class MyEncoder (JSONEncoder):
             pass
         else:
             return list(iterable)
-        
+
         try:
             return JSONEncoder.default(self, o)
         except TypeError:
@@ -54,7 +55,7 @@ class MyEncoder (JSONEncoder):
 @task
 def printoptions():
     '''print paver options.
-    
+
     Prettified by json.
     `long_description` is removed
     '''
@@ -63,4 +64,4 @@ def printoptions():
                    sort_keys=True,
                    skipkeys=True,
                    cls=MyEncoder)
-    print x
+    print(x)

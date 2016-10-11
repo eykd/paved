@@ -3,6 +3,7 @@
 
 Copyright 2010 David Eyk. All rights reserved.
 """
+from __future__ import unicode_literals
 import site
 
 import warnings
@@ -25,7 +26,7 @@ options.paved.docs.rsync_location = 'eykd.net:webapps/net_eykd_worlds__static/pa
 
 setup(
     name = "Paved",
-    version = "0.4.1",
+    version = "0.5.0",
     url = "https://github.com/eykd/paved",
     download_url = "http://pypi.python.org/pypi/Paved/",
     author = "David Eyk",
@@ -45,6 +46,8 @@ setup(
         'Topic :: Utilities',
         'Topic :: Software Development :: Build Tools',
         'Topic :: Software Development :: Libraries :: Python Modules',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
         ],
 
     packages=['paved'],

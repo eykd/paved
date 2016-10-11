@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """pycheck -- check python code.
 """
+from __future__ import unicode_literals
 from . import util
 from paver.easy import options, task, sh, needs, path
 from paver.options import Bunch
@@ -35,9 +36,9 @@ util.update(
 @task
 def sloccount():
     '''Print "Source Lines of Code" and export to file.
-    
+
     Export is hudson_ plugin_ compatible: sloccount.sc
-    
+
     requirements:
      - sloccount_ should be installed.
      - tee and pipes are used
@@ -52,13 +53,13 @@ def sloccount():
     # filter out  subpackages
     setup = options.get('setup')
     packages = options.get('packages') if setup else None
-        
+
     if packages:
         dirs = [x for x in packages if '.' not in x]
     else:
         dirs = ['.']
-    
-    # sloccount has strange behaviour with directories, 
+
+    # sloccount has strange behaviour with directories,
     # can cause exception in hudson sloccount plugin.
     # Better to call it with file list
     ls=[]
@@ -72,7 +73,7 @@ def sloccount():
 @task
 def findimports():
     '''print python module dependencies by findimports.
-       
+
     requirements:
      - findimports_ should be installed. ``easy_install findimports``
 
@@ -89,7 +90,7 @@ def findimports():
 @task
 def pyflakes():
     '''passive check of python programs by pyflakes.
-       
+
     requirements:
      - pyflakes_ should be installed. ``easy_install pyflakes``
 
@@ -106,7 +107,7 @@ def pyflakes():
 @task
 def pychecker():
     '''check of python programs by pychecker.
-       
+
     requirements:
      - pychecker_ should be installed.
 
@@ -123,12 +124,12 @@ def pychecker():
 @task
 def nose():
     '''Run unit tests using nosetests.
-       
+
     requirements:
      - nose_ should be installed.
 
     options.paved.pycheck.nose.param
-    
+
     .. _nose: http://somethingaboutorange.com/mrl/projects/nose/1.0.0/
     '''
     sh('nosetests {param}'.format(param=options.paved.pycheck.nose.param))
