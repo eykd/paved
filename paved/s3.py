@@ -4,6 +4,7 @@
 Requires boto.
 """
 from __future__ import unicode_literals
+from six.moves import zip
 import time
 import datetime
 import itertools
@@ -49,7 +50,7 @@ def upload_s3(file_path, bucket_name, file_key, force=False, acl='private'):
     if file_path.isdir():
         # Upload the contents of the dir path.
         paths = file_path.listdir()
-        paths_keys = zip(paths, ['%s/%s' % (file_key, p.name) for p in paths])
+        paths_keys = list(zip(paths, ['%s/%s' % (file_key, p.name) for p in paths]))
     else:
         # Upload just the given file path.
         paths_keys = [(file_path, file_key)]
