@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = "Paved",
-    version = "0.5.0",
+    version = "0.5.1",
     url = "https://github.com/eykd/paved",
     download_url = "http://pypi.python.org/pypi/Paved/",
     author = "David Eyk",
