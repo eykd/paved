@@ -16,10 +16,8 @@ util.update(
     options.paved,
     dict(
         dist = Bunch(
-            distribute_url = 'http://python-distribute.org/distribute_setup.py',
             manifest = Bunch(
                 include = set([
-                        "distribute_setup.py",
                         "pavement.py",
                         "paver-minilib.zip",
                         "setup.py",
@@ -37,19 +35,7 @@ util.update(
         )
     )
 
-__all__ = ['get_distribute', 'sdist', 'upload', 'manifest']
-
-
-@task
-def get_distribute(options):
-    """Retrieve a copy of distribute_setup.py for distribution.
-
-    `options.paved.dist.distribute_url`: the URL to download the
-    `distribute_setup.py` file from.
-    """
-    url = urlopen(options.paved.dist.distribute_url)
-    with open(options.paved.cwd / 'distribute_setup.py', 'w') as fo:
-        fo.write(url.read())
+__all__ = ['sdist', 'upload', 'manifest']
 
 
 @task
@@ -92,7 +78,7 @@ def manifest():
 
 
 @task
-@needs('get_distribute', 'generate_setup', 'minilib', 'manifest', 'setuptools.command.sdist')
+@needs('generate_setup', 'minilib', 'manifest', 'setuptools.command.sdist')
 def sdist():
     """Overrides sdist to make sure that our setup.py is generated.
     """

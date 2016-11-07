@@ -3,7 +3,6 @@ include LICENSE*
 include pavement.py
 include paver-minilib.zip
 include TODO*
-include distribute_setup.py
 include CHANGES*
 include README*
 include setup.py
