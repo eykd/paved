@@ -16,7 +16,6 @@
 /build/
 /download-cache/
 paver-minilib.zip
-distribute_setup.py
 bootstrap.py
 .DS_Store
 pip-log.txt
